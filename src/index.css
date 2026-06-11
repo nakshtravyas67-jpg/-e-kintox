@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+@theme {
+  --color-inverse-surface: #2f3131;
+  --color-outline-variant: #c3c6d7;
+  --color-primary-container: #386ced;
+  --color-on-surface: #1a1c1c;
+  --color-tertiary: #5b5c5c;
+  --color-tertiary-fixed: #e2e2e2;
+  --color-on-tertiary-container: #fcfcfc;
+  --color-surface-container: #eeeeee;
+  --color-on-primary-container: #fefcff;
+  --color-outline: #737686;
+  --color-surface-dim: #dadada;
+  --color-on-secondary-fixed: #1b1b1b;
+  --color-on-primary-fixed: #00174b;
+  --color-surface-container-low: #f3f3f4;
+  --color-primary-fixed: #dbe1ff;
+  --color-on-tertiary-fixed-variant: #454747;
+  --color-primary-fixed-dim: #b4c5ff;
+  --color-on-secondary: #ffffff;
+  --color-primary: #0071E3;
+  --color-surface-container-high: #e8e8e8;
+  --color-on-tertiary-fixed: #1a1c1c;
+  --color-on-secondary-fixed-variant: #474747;
+  --color-secondary-container: #e2e2e2;
+  --color-on-primary-fixed-variant: #003da9;
+  --color-inverse-on-surface: #f0f1f1;
+  --color-on-error-container: #93000a;
+  --color-tertiary-container: #737575;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-surface: #f9f9f9;
+  --color-on-background: #1a1c1c;
+  --color-on-secondary-container: #646464;
+  --color-on-tertiary: #ffffff;
+  --color-secondary-fixed-dim: #c6c6c6;
+  --color-surface-tint: #1254d6;
+  --color-on-primary: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-secondary-fixed: #e2e2e2;
+  --color-background: #f9f9f9;
+  --color-surface-variant: #e2e2e2;
+  --color-inverse-primary: #b4c5ff;
+  --color-surface-container-highest: #e2e2e2;
+  --color-surface-bright: #f9f9f9;
+  --color-tertiary-fixed-dim: #c6c6c7;
+  --color-secondary: #5e5e5e;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-surface-variant: #434654;
+
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  --spacing-margin-mobile: 20px;
+  --spacing-margin-desktop: 64px;
+  --spacing-gutter: 24px;
+  --spacing-base: 8px;
+  --spacing-container-max: 1440px;
+
+  --font-family-display-lg: 'Poppins', sans-serif;
+  --font-family-display-lg-mobile: 'Poppins', sans-serif;
+  --font-family-headline-md: 'Poppins', sans-serif;
+  --font-family-headline-lg: 'Poppins', sans-serif;
+  --font-family-body-lg: 'Poppins', sans-serif;
+  --font-family-body-md: 'Poppins', sans-serif;
+  --font-family-button-text: 'Poppins', sans-serif;
+  --font-family-title-uppercase: 'Poppins', sans-serif;
+  --font-family-label-md: 'Poppins', sans-serif;
+
+  --font-size-display-lg: 80px;
+  --font-size-display-lg--line-height: 90px;
+  --font-size-display-lg--letter-spacing: -0.02em;
+  --font-size-display-lg--font-weight: 800;
+
+  --font-size-display-lg-mobile: 48px;
+  --font-size-display-lg-mobile--line-height: 56px;
+  --font-size-display-lg-mobile--letter-spacing: -0.01em;
+  --font-size-display-lg-mobile--font-weight: 800;
+
+  --font-size-headline-md: 32px;
+  --font-size-headline-md--line-height: 40px;
+  --font-size-headline-md--letter-spacing: 0em;
+  --font-size-headline-md--font-weight: 700;
+
+  --font-size-headline-lg: 48px;
+  --font-size-headline-lg--line-height: 56px;
+  --font-size-headline-lg--letter-spacing: -0.01em;
+  --font-size-headline-lg--font-weight: 800;
+
+  --font-size-body-lg: 18px;
+  --font-size-body-lg--line-height: 28px;
+  --font-size-body-lg--font-weight: 400;
+
+  --font-size-body-md: 16px;
+  --font-size-body-md--line-height: 24px;
+  --font-size-body-md--font-weight: 400;
+
+  --font-size-button-text: 14px;
+  --font-size-button-text--line-height: 20px;
+  --font-size-button-text--letter-spacing: 0.1em;
+  --font-size-button-text--font-weight: 600;
+
+  --font-size-title-uppercase: 14px;
+  --font-size-title-uppercase--line-height: 20px;
+  --font-size-title-uppercase--letter-spacing: 0.15em;
+  --font-size-title-uppercase--font-weight: 600;
+
+  --font-size-label-md: 14px;
+  --font-size-label-md--line-height: 20px;
+  --font-size-label-md--font-weight: 500;
+
+  --spacing-section-gap-mobile: 80px;
+  --spacing-section-gap-desktop: 160px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+::selection {
+  background: #0071E3;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F5F7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C7C7CC;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #AEAEB2;
+}
+
+.nav-underline-anim {
+  position: relative;
+}
+
+.nav-underline-anim::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 50%;
+  background-color: #386ced;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-underline-anim:hover::after {
+  width: 100%;
+}
+
+@keyframes scroll-indicator {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scroll-indicator {
+  animation: scroll-indicator 2s infinite ease-in-out;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 4s ease-in-out infinite;
+}
+
+.perspective-\[1200px\] {
+  perspective: 1200px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scale-in 0.6s ease-out forwards;
+}
+
+@media (prefers-color-scheme: dark) {
+  body { background-color: #0a0a0a; color: #f5f5f7; }
+}
+
+.dark body,
+body.dark {
+  --color-background: #0a0a0a;
+  --color-surface: #121212;
+  --color-on-background: #f5f5f7;
+  --color-surface-container-lowest: #1a1a1a;
+  background-color: #0a0a0a;
+  color: #f5f5f7;
+}

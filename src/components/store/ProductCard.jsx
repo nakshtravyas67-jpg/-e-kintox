@@ -1,0 +1,136 @@
+import { useRef, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { formatPrice } from '../../data/products'
+import { useCart } from '../../context/CartContext'
+
+export default function ProductCard({ product, index, onQuickView }) {
+  const { addToCart, cart } = useCart()
+  const cardRef = useRef(null)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [selectedColor, setSelectedColor] = useState(null)
+  const [added, setAdded] = useState(false)
+
+  const handleMouseMove = (e) => {
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    setTilt({ x: x * 12, y: y * -12 })
+  }
+
+  const handleMouseLeave = () => setTilt({ x: 0, y: 0 })
+
+  const handleAdd = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    addToCart(product)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1500)
+  }
+
+  const inCart = cart.some(p => p.id === product.id)
+
+  return (
+    <Link
+      to={`/product/${product.id}`}
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="group block perspective-[800px]"
+    >
+      <div
+        className="bg-[#F5F5F7] rounded-2xl overflow-hidden transition-all duration-[400ms]"
+        style={{ transform: `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)` }}
+      >
+        <div className="relative h-48 overflow-hidden">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+
+          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+            {product.badge && (
+              <span className="bg-[#0071E3] text-white px-3 py-1 rounded-full text-[10px] font-medium">{product.badge}</span>
+            )}
+            {product.originalPrice && (
+              <span className="bg-red-500 text-white px-2.5 py-1 rounded-full text-[10px] font-medium">
+                -{Math.round((1 - product.price / product.originalPrice) * 100)}%
+              </span>
+            )}
+          </div>
+
+          {product.stock && (
+            <div className={`absolute bottom-3 left-3 text-[10px] font-medium px-2.5 py-1 rounded-full border ${
+              product.stock === 'In Stock' ? 'text-green-700 bg-green-50 border-green-200' :
+              product.stock === 'Few Left' ? 'text-orange-600 bg-orange-50 border-orange-200' :
+              'text-red-600 bg-red-50 border-red-200'
+            }`}>
+              {product.stock}
+            </div>
+          )}
+
+          <div className="absolute top-3 right-3 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+            <button
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product) }}
+              className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg"
+            >
+                  <svg className="w-4 h-4 text-[#1D1D1F]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" /></svg>
+            </button>
+          </div>
+        </div>
+
+        <div className="p-5 bg-white">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] text-[#0071E3] font-semibold uppercase tracking-wider">{product.category}</span>
+            {product.software && (
+              <span className="text-[9px] text-[#6E6E73] bg-[#F5F5F7] px-2 py-0.5 rounded-full">{product.software.split(',')[0].trim()}</span>
+            )}
+          </div>
+
+          <h3 className="font-semibold text-[#1D1D1F] group-hover:text-[#0071E3] transition-colors duration-200">{product.title}</h3>
+          <p className="text-xs text-[#6E6E73] mt-1 line-clamp-2">{product.desc}</p>
+
+          <div className="flex items-center gap-2 mt-3 mb-3">
+            {product.colors?.map((c) => (
+              <button
+                key={c}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelectedColor(c) }}
+                className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${
+                  selectedColor === c ? 'border-[#1D1D1F] scale-125' : 'border-transparent hover:scale-110'
+                }`}
+                style={{ backgroundColor: c }}
+              />
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-baseline gap-1.5 overflow-hidden">
+              <span className="font-bold text-lg text-[#0071E3] transition-all duration-300 group-hover:-translate-y-1 block">{formatPrice(product.price)}</span>
+              {product.originalPrice && (
+                <span className="text-xs text-[#6E6E73] line-through transition-all duration-300 group-hover:-translate-y-1 block">{formatPrice(product.originalPrice)}</span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <svg className="w-4 h-4 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                <span className="text-xs text-[#6E6E73]">{product.rating}</span>
+                <span className="text-[10px] text-[#6E6E73] ml-0.5">({product.reviews})</span>
+              </div>
+              <button
+                onClick={handleAdd}
+                className={`px-2.5 py-1.5 rounded-full text-[10px] font-medium transition-all ${
+                  added || inCart
+                    ? 'bg-green-500 text-white'
+                    : 'bg-[#0071E3] text-white opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0'
+                }`}
+              >
+                {added || inCart ? 'Added' : 'Add'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  )
+}
