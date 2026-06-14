@@ -1,3 +1,44 @@
+const reviewers = [
+  { initials: 'AK', name: 'Aarav K.', time: '2 weeks ago', text: 'Absolutely stunning design kit! Every component is pixel-perfect.' },
+  { initials: 'RS', name: 'Riya S.', time: '1 month ago', text: 'Best purchase I have made for my design toolkit. Outstanding quality.' },
+  { initials: 'MP', name: 'Mihir P.', time: '3 weeks ago', text: 'Great value for money. Well-thought-out and easy to customize.' },
+  { initials: 'DJ', name: 'Divya J.', time: '5 days ago', text: 'Clean, modern, and incredibly detailed. Exceeded my expectations.' },
+  { initials: 'AKh', name: 'Akash Kh.', time: '2 months ago', text: 'The file organization is superb. Saved me hours of work.' },
+  { initials: 'PS', name: 'Priya S.', time: '1 week ago', text: 'Perfect for my client project. They loved the final result!' },
+  { initials: 'RM', name: 'Rohit M.', time: '3 months ago', text: 'High quality and well documented. Highly recommend.' },
+  { initials: 'SN', name: 'Sneha N.', time: '2 weeks ago', text: 'Beautiful design system. Everything just works out of the box.' },
+  { initials: 'VK', name: 'Varun K.', time: '6 days ago', text: 'Incredible attention to detail. Worth every rupee.' },
+  { initials: 'AP', name: 'Anika P.', time: '1 month ago', text: 'The best UI kit I have ever purchased. Five stars!' },
+]
+
+function pickReviewers(id, count = 3) {
+  const start = ((id - 1) * 3) % reviewers.length
+  return Array.from({ length: count }, (_, i) => reviewers[(start + i) % reviewers.length])
+}
+
+const productPalettes = [
+  { bg: '#0066cc', accent: '#4d94ff' },
+  { bg: '#1d1d1f', accent: '#6e6e73' },
+  { bg: '#5856d6', accent: '#8e8aff' },
+  { bg: '#007aff', accent: '#4da6ff' },
+  { bg: '#34c759', accent: '#6ddf8a' },
+  { bg: '#ff9500', accent: '#ffb84d' },
+  { bg: '#ff3b30', accent: '#ff6b63' },
+  { bg: '#af52de', accent: '#c977f0' },
+]
+
+function generateProductImage(id) {
+  const p = productPalettes[(id - 1) % productPalettes.length]
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+    <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${p.bg}"/><stop offset="100%" style="stop-color:${p.accent}"/></linearGradient></defs>
+    <rect width="600" height="400" fill="url(#g)"/>
+    <circle cx="480" cy="80" r="140" fill="rgba(255,255,255,0.06)"/>
+    <circle cx="120" cy="340" r="100" fill="rgba(255,255,255,0.04)"/>
+    <text x="300" y="200" font-family="Inter,Helvetica,sans-serif" font-size="120" font-weight="600" fill="rgba(255,255,255,0.12)" text-anchor="middle">${'KINTOX'.charAt((id - 1) % 6)}</text>
+  </svg>`
+  return `data:image/svg+xml;base64,${btoa(svg)}`
+}
+
 const products = [
   {
     id: 1,
@@ -10,12 +51,8 @@ const products = [
     badge: 'Trending Now',
     stock: 'In Stock',
     colors: ['#0071E3', '#1D1D1F', '#E8E8ED'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBMpY4DLQRpPDs-l-fQuaHfJmr3NmO2iFo4sKbRDUZ3TjSVesvqosAhW5VZvfKuY6q3_LYOgxbaXLxPUfzg_vQQlvHCgNTkK69PME010MfMgU3KbDFQuml9um4zE2yeQrjLnUcslGjm5EUMzVE_tlwz8e3Vmoks_5bT01k7vTXO3gQ1Gk1JLAO-Ygp-LIhkIa7xRFyEBcV4LewJptaHlxnSW-R79M4bagRXKZHqZ4SCgrzP4fq50lAMPbXTVffvB3xku7EiJ1qmtdY',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBMpY4DLQRpPDs-l-fQuaHfJmr3NmO2iFo4sKbRDUZ3TjSVesvqosAhW5VZvfKuY6q3_LYOgxbaXLxPUfzg_vQQlvHCgNTkK69PME010MfMgU3KbDFQuml9um4zE2yeQrjLnUcslGjm5EUMzVE_tlwz8e3Vmoks_5bT01k7vTXO3gQ1Gk1JLAO-Ygp-LIhkIa7xRFyEBcV4LewJptaHlxnSW-R79M4bagRXKZHqZ4SCgrzP4fq50lAMPbXTVffvB3xku7EiJ1qmtdY',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCfxK6BEyP41iSSyIrjBNXSNZ9L96NluR9yEt154d-D5DMnybnAGfocMLZoxT_28bmDr-SZGRaj4Vo18JquScMk1-wV6wVb1Z5dDlnK1kzC0Aea_Z3YbozPetSBbENCq_M2Yh7Ne39vRHt6VwHbCMX6Ig_qJ1SFdH-DssCrgYBK55OA7On6TxDFmvrHC_YIS6uvW2NwHi3bLzLeooDhCAD5KrpW7sZtr7lxQW9HiWMU2W-QkdOksy3YKXhwiMerXdDJWu4qYmykSHk',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBcgDXevumWcthpMwxfdXRl85XQyoRQcjATf_M5ZwGl_Wv8tBoFuNEPIobcQVZ8O7FOOtGBCxQK1aDCttb1qFTzQ8qI76RXMD5rI2H2DHbbyOKAarnqUhOciHFeKUngQaHSQqb1QtSd2VE-4mt448E-0VqZojVioEBrCbe_rJwkxVO8MoOEPuFlgmbAHmTWnC4mWXEFVAfMfsxpQeqFDcP-cuuzek761nDN0F1X2IFBLFJbqCcpHMudkNyOzBWq1gXYukQpLnAH-wA',
-    ],
+    image: null,
+    screenshots: [],
     desc: 'A complete, modern SaaS dashboard interface system designed for tech platforms. Features 120+ components, dark/light modes, and fully responsive layouts.',
     features: [
       'Fully Editable Figma File',
@@ -45,13 +82,9 @@ const products = [
     reviews: 94,
     stock: 'Few Left',
     colors: ['#1D1D1F', '#F5F5F7', '#E8E8ED'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDPlHQGNJRgLhJ3EYyMJklDQBKT1rzwy44OYfCv4UBjktrreV1Six6mN9sdRneCMEwDK0DurrD7ptSzj14lW6an5NT2OChKZTMedeDguuHlYxdpYwKpTkvbAWMhPZiLm_fKknETICdZraSHPP_CvJJtWtIV41RutfOqiPJgKxmnxK-DslA2GkbgwweUD_9VYMqwjD58RT_LZbcbUB5SW7FQUERjxE0U-FC1wn-GfiBLulgCCd_g-kty8nZkYmpm_z_CBNEieOJkphw',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDPlHQGNJRgLhJ3EYyMJklDQBKT1rzwy44OYfCv4UBjktrreV1Six6mN9sdRneCMEwDK0DurrD7ptSzj14lW6an5NT2OChKZTMedeDguuHlYxdpYwKpTkvbAWMhPZiLm_fKknETICdZraSHPP_CvJJtWtIV41RutfOqiPJgKxmnxK-DslA2GkbgwweUD_9VYMqwjD58RT_LZbcbUB5SW7FQUERjxE0U-FC1wn-GfiBLulgCCd_g-kty8nZkYmpm_z_CBNEieOJkphw',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuByUUYRIfal2WHLQhCyHbsFYc3x7RiOJ3I2KipQLa40bXj_Bfy3IHOUokJfcB8AngXaitrMOok_pTducnApR4ochahSFAuwpKwBvJ_cqN7VGTYv-4RtcX0a7iQ_ds2z2CikOLW040EZGHhzoUbwPb_JDjqYpgetRpTFnXPJSLRSEfSLg3_0xlMp1RhLqEktDwrsh0_3v8a9PIAKjaePmajiZJ3cjv9JOCM00cfcWTkPpymEkJdCfpH0kAYdPaRPwi0KPgyA2mWyAnU',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAHrdZxEAaf9-w-F1eRFsbhouOeE1UQDe5dIHv1ZqerJG_DGinSm-ezKDw4JiQmFQm_tQ6_yYqmD6M1soaFlSJftQyTE-jkLHOn-hFWnrnMZNsWrBZBrqEAuaPNFgKWvvf06vDuK6ip_fZHwA6YL6O6vnlMDCuvHYpJF_kCxb6aTmqv6hctR0PX07UyhVof84YpO1H8m2ryGmfhX1n-3bubP8j69YBYH6XxpcFKlSjuNa5GJMFimRcXEFAKjuja6KbAWrBDIZYkANY',
-    ],
-    desc: 'A collection of professional, minimalist social media templates with clean Swiss typography and high-fashion photography.',
+    image: null,
+    screenshots: [],
+    desc: 'A collection of professional, minimalist social media templates with clean Swiss typography.',
     features: [
       '30+ Instagram Post Templates',
       'Fully Editable Text & Colors',
@@ -77,11 +110,8 @@ const products = [
     rating: 4.7,
     reviews: 203,
     stock: 'In Stock',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA871jSUqqyMupCiQmo_SohCoRviyPu3JYv4iT5LBNcG1PM0npS11pUvC3Lftj_F3gLwLO1F4z5Kfx27vNUCwqPxbfWldSzYSXmQIu3Pgsqrw1Tl5CspLwJNVErGijJ3HKBEtmnqU4JENuQWGFtkwDCjAVNlH8YL32I5o31MRx4IdsYcnHhK_rPRr3MpgOCBkJTJ7WyKm2-gDIha1Rl1rb-0olcN--ewSi_d-oyCqsDwppHo0-2ZqRyp7aUBOHmEwYbQjuO3lWHDvU',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuA871jSUqqyMupCiQmo_SohCoRviyPu3JYv4iT5LBNcG1PM0npS11pUvC3Lftj_F3gLwLO1F4z5Kfx27vNUCwqPxbfWldSzYSXmQIu3Pgsqrw1Tl5CspLwJNVErGijJ3HKBEtmnqU4JENuQWGFtkwDCjAVNlH8YL32I5o31MRx4IdsYcnHhK_rPRr3MpgOCBkJTJ7WyKm2-gDIha1Rl1rb-0olcN--ewSi_d-oyCqsDwppHo0-2ZqRyp7aUBOHmEwYbQjuO3lWHDvU',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBMpY4DLQRpPDs-l-fQuaHfJmr3NmO2iFo4sKbRDUZ3TjSVesvqosAhW5VZvfKuY6q3_LYOgxbaXLxPUfzg_vQQlvHCgNTkK69PME010MfMgU3KbDFQuml9um4zE2yeQrjLnUcslGjm5EUMzVE_tlwz8e3Vmoks_5bT01k7vTXO3gQ1Gk1JLAO-Ygp-LIhkIa7xRFyEBcV4LewJptaHlxnSW-R79M4bagRXKZHqZ4SCgrzP4fq50lAMPbXTVffvB3xku7EiJ1qmtdY',
-    ],
+    image: null,
+    screenshots: [],
     desc: 'Set of 10 high-CTR YouTube thumbnail templates optimized for tech review channels.',
     features: [
       '10 Unique Thumbnail Templates',
@@ -108,12 +138,8 @@ const products = [
     rating: 4.9,
     reviews: 67,
     stock: 'Limited',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAhUM1C59-uPJxCBiFNO0BD2enCSP0OcYv0sBhus-4k0_Gs62NTtCbGkvAlfMZCdjxEn0Zd1MfwKc1maE7FmhFPp02kIPvOLcLbZE-lfPH8hgHw8aSjjnOxC_8fUHM6mXsqqYnmBt5EiCbroCtcevML6VyYxytxbO3rXx7k93f920CJbOIJDLf7gCm6L7pTaVyTmCpvb3ImofFyDh7rhT8tNMwmDxJdI8jzZ-ox87CiLXG24YzOt6R5xGCVXLJRp6NZLxDR_sYB_Jw',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAhUM1C59-uPJxCBiFNO0BD2enCSP0OcYv0sBhus-4k0_Gs62NTtCbGkvAlfMZCdjxEn0Zd1MfwKc1maE7FmhFPp02kIPvOLcLbZE-lfPH8hgHw8aSjjnOxC_8fUHM6mXsqqYnmBt5EiCbroCtcevML6VyYxytxbO3rXx7k93f920CJbOIJDLf7gCm6L7pTaVyTmCpvb3ImofFyDh7rhT8tNMwmDxJdI8jzZ-ox87CiLXG24YzOt6R5xGCVXLJRp6NZLxDR_sYB_Jw',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAHrdZxEAaf9-w-F1eRFsbhouOeE1UQDe5dIHv1ZqerJG_DGinSm-ezKDw4JiQmFQm_tQ6_yYqmD6M1soaFlSJftQyTE-jkLHOn-hFWnrnMZNsWrBZBrqEAuaPNFgKWvvf06vDuK6ip_fZHwA6YL6O6vnlMDCuvHYpJF_kCxb6aTmqv6hctR0PX07UyhVof84YpO1H8m2ryGmfhX1n-3bubP8j69YBYH6XxpcFKlSjuNa5GJMFimRcXEFAKjuja6KbAWrBDIZYkANY',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCfxK6BEyP41iSSyIrjBNXSNZ9L96NluR9yEt154d-D5DMnybnAGfocMLZoxT_28bmDr-SZGRaj4Vo18JquScMk1-wV6wVb1Z5dDlnK1kzC0Aea_Z3YbozPetSBbENCq_M2Yh7Ne39vRHt6VwHbCMX6Ig_qJ1SFdH-DssCrgYBK55OA7On6TxDFmvrHC_YIS6uvW2NwHi3bLzLeooDhCAD5KrpW7sZtr7lxQW9HiWMU2W-QkdOksy3YKXhwiMerXdDJWu4qYmykSHk',
-    ],
+    image: null,
+    screenshots: [],
     desc: 'iOS & Android optimized finance app UI kit with glassmorphism cards and elegant charts.',
     features: [
       'iOS & Android Screens',
@@ -139,11 +165,8 @@ const products = [
     rating: 5.0,
     reviews: 45,
     stock: 'In Stock',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuByUUYRIfal2WHLQhCyHbsFYc3x7RiOJ3I2KipQLa40bXj_Bfy3IHOUokJfcB8AngXaitrMOok_pTducnApR4ochahSFAuwpKwBvJ_cqN7VGTYv-4RtcX0a7iQ_ds2z2CikOLW040EZGHhzoUbwPb_JDjqYpgetRpTFnXPJSLRSEfSLg3_0xlMp1RhLqEktDwrsh0_3v8a9PIAKjaePmajiZJ3cjv9JOCM00cfcWTkPpymEkJdCfpH0kAYdPaRPwi0KPgyA2mWyAnU',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuByUUYRIfal2WHLQhCyHbsFYc3x7RiOJ3I2KipQLa40bXj_Bfy3IHOUokJfcB8AngXaitrMOok_pTducnApR4ochahSFAuwpKwBvJ_cqN7VGTYv-4RtcX0a7iQ_ds2z2CikOLW040EZGHhzoUbwPb_JDjqYpgetRpTFnXPJSLRSEfSLg3_0xlMp1RhLqEktDwrsh0_3v8a9PIAKjaePmajiZJ3cjv9JOCM00cfcWTkPpymEkJdCfpH0kAYdPaRPwi0KPgyA2mWyAnU',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDPlHQGNJRgLhJ3EYyMJklDQBKT1rzwy44OYfCv4UBjktrreV1Six6mN9sdRneCMEwDK0DurrD7ptSzj14lW6an5NT2OChKZTMedeDguuHlYxdpYwKpTkvbAWMhPZiLm_fKknETICdZraSHPP_CvJJtWtIV41RutfOqiPJgKxmnxK-DslA2GkbgwweUD_9VYMqwjD58RT_LZbcbUB5SW7FQUERjxE0U-FC1wn-GfiBLulgCCd_g-kty8nZkYmpm_z_CBNEieOJkphw',
-    ],
+    image: null,
+    screenshots: [],
     desc: 'Abstract gradient poster collection with fluid organic shapes and vibrant holographic transitions.',
     features: [
       '12 Unique Poster Designs',
@@ -155,7 +178,7 @@ const products = [
     ],
     whatsIncluded: 'PSD Files, AI Files, PDF Print Files, Preview Images',
     software: 'Adobe Photoshop, Adobe Illustrator',
-    longDesc: 'A stunning collection of abstract gradient posters featuring fluid organic shapes and vibrant holographic transitions. Perfect for modern interior design, gallery walls, or digital displays.',
+    longDesc: 'A stunning collection of abstract gradient posters featuring fluid organic shapes and vibrant holographic transitions.',
     faq: [
       { q: 'Are these print-ready?', a: 'Yes, 300 DPI CMYK files included for printing.' },
       { q: 'Can I resize them?', a: 'Yes, the vector files are fully scalable.' },
@@ -169,12 +192,8 @@ const products = [
     rating: 4.7,
     reviews: 156,
     stock: 'In Stock',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCfxK6BEyP41iSSyIrjBNXSNZ9L96NluR9yEt154d-D5DMnybnAGfocMLZoxT_28bmDr-SZGRaj4Vo18JquScMk1-wV6wVb1Z5dDlnK1kzC0Aea_Z3YbozPetSBbENCq_M2Yh7Ne39vRHt6VwHbCMX6Ig_qJ1SFdH-DssCrgYBK55OA7On6TxDFmvrHC_YIS6uvW2NwHi3bLzLeooDhCAD5KrpW7sZtr7lxQW9HiWMU2W-QkdOksy3YKXhwiMerXdDJWu4qYmykSHk',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCfxK6BEyP41iSSyIrjBNXSNZ9L96NluR9yEt154d-D5DMnybnAGfocMLZoxT_28bmDr-SZGRaj4Vo18JquScMk1-wV6wVb1Z5dDlnK1kzC0Aea_Z3YbozPetSBbENCq_M2Yh7Ne39vRHt6VwHbCMX6Ig_qJ1SFdH-DssCrgYBK55OA7On6TxDFmvrHC_YIS6uvW2NwHi3bLzLeooDhCAD5KrpW7sZtr7lxQW9HiWMU2W-QkdOksy3YKXhwiMerXdDJWu4qYmykSHk',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBcgDXevumWcthpMwxfdXRl85XQyoRQcjATf_M5ZwGl_Wv8tBoFuNEPIobcQVZ8O7FOOtGBCxQK1aDCttb1qFTzQ8qI76RXMD5rI2H2DHbbyOKAarnqUhOciHFeKUngQaHSQqb1QtSd2VE-4mt448E-0VqZojVioEBrCbe_rJwkxVO8MoOEPuFlgmbAHmTWnC4mWXEFVAfMfsxpQeqFDcP-cuuzek761nDN0F1X2IFBLFJbqCcpHMudkNyOzBWq1gXYukQpLnAH-wA',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBMpY4DLQRpPDs-l-fQuaHfJmr3NmO2iFo4sKbRDUZ3TjSVesvqosAhW5VZvfKuY6q3_LYOgxbaXLxPUfzg_vQQlvHCgNTkK69PME010MfMgU3KbDFQuml9um4zE2yeQrjLnUcslGjm5EUMzVE_tlwz8e3Vmoks_5bT01k7vTXO3gQ1Gk1JLAO-Ygp-LIhkIa7xRFyEBcV4LewJptaHlxnSW-R79M4bagRXKZHqZ4SCgrzP4fq50lAMPbXTVffvB3xku7EiJ1qmtdY',
-    ],
+    image: null,
+    screenshots: [],
     desc: 'A premium e-commerce website design template with high-fashion aesthetic and oversized product imagery.',
     features: [
       '15+ Page Templates',
@@ -186,7 +205,7 @@ const products = [
     ],
     whatsIncluded: 'Figma File, UI Components, Documentation',
     software: 'Figma',
-    longDesc: 'A luxury e-commerce website UI kit designed for high-end fashion brands. Features oversized product imagery, elegant typography, and a seamless shopping experience from browse to checkout.',
+    longDesc: 'A luxury e-commerce website UI kit designed for high-end fashion brands. Features oversized product imagery, elegant typography, and a seamless shopping experience.',
     faq: [
       { q: 'Can I use with Webflow?', a: 'Yes, the Figma design can be exported to Webflow.' },
       { q: 'Includes mobile?', a: 'Yes, fully responsive with mobile layouts included.' },
@@ -200,12 +219,8 @@ const products = [
     rating: 4.9,
     reviews: 89,
     stock: 'Few Left',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBcgDXevumWcthpMwxfdXRl85XQyoRQcjATf_M5ZwGl_Wv8tBoFuNEPIobcQVZ8O7FOOtGBCxQK1aDCttb1qFTzQ8qI76RXMD5rI2H2DHbbyOKAarnqUhOciHFeKUngQaHSQqb1QtSd2VE-4mt448E-0VqZojVioEBrCbe_rJwkxVO8MoOEPuFlgmbAHmTWnC4mWXEFVAfMfsxpQeqFDcP-cuuzek761nDN0F1X2IFBLFJbqCcpHMudkNyOzBWq1gXYukQpLnAH-wA',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBcgDXevumWcthpMwxfdXRl85XQyoRQcjATf_M5ZwGl_Wv8tBoFuNEPIobcQVZ8O7FOOtGBCxQK1aDCttb1qFTzQ8qI76RXMD5rI2H2DHbbyOKAarnqUhOciHFeKUngQaHSQqb1QtSd2VE-4mt448E-0VqZojVioEBrCbe_rJwkxVO8MoOEPuFlgmbAHmTWnC4mWXEFVAfMfsxpQeqFDcP-cuuzek761nDN0F1X2IFBLFJbqCcpHMudkNyOzBWq1gXYukQpLnAH-wA',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCfxK6BEyP41iSSyIrjBNXSNZ9L96NluR9yEt154d-D5DMnybnAGfocMLZoxT_28bmDr-SZGRaj4Vo18JquScMk1-wV6wVb1Z5dDlnK1kzC0Aea_Z3YbozPetSBbENCq_M2Yh7Ne39vRHt6VwHbCMX6Ig_qJ1SFdH-DssCrgYBK55OA7On6TxDFmvrHC_YIS6uvW2NwHi3bLzLeooDhCAD5KrpW7sZtr7lxQW9HiWMU2W-QkdOksy3YKXhwiMerXdDJWu4qYmykSHk',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBMpY4DLQRpPDs-l-fQuaHfJmr3NmO2iFo4sKbRDUZ3TjSVesvqosAhW5VZvfKuY6q3_LYOgxbaXLxPUfzg_vQQlvHCgNTkK69PME010MfMgU3KbDFQuml9um4zE2yeQrjLnUcslGjm5EUMzVE_tlwz8e3Vmoks_5bT01k7vTXO3gQ1Gk1JLAO-Ygp-LIhkIa7xRFyEBcV4LewJptaHlxnSW-R79M4bagRXKZHqZ4SCgrzP4fq50lAMPbXTVffvB3xku7EiJ1qmtdY',
-    ],
+    image: null,
+    screenshots: [],
     desc: 'Professional agency portfolio sections including hero headers, project grids, and testimonials.',
     features: [
       '20+ Section Templates',
@@ -217,7 +232,7 @@ const products = [
     ],
     whatsIncluded: 'Figma Source File, Framer Export Guide, Assets',
     software: 'Figma, Framer',
-    longDesc: 'A complete agency website pack with 20+ professionally designed sections. Perfect for creative agencies, design studios, and freelance professionals looking to showcase their work.',
+    longDesc: 'A complete agency website pack with 20+ professionally designed sections. Perfect for creative agencies and design studios.',
     faq: [
       { q: 'Can I export to Framer?', a: 'Yes, includes a Framer export guide.' },
       { q: 'Are the images included?', a: 'Placeholder images are included for preview.' },
@@ -231,12 +246,8 @@ const products = [
     rating: 4.6,
     reviews: 178,
     stock: 'In Stock',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHrdZxEAaf9-w-F1eRFsbhouOeE1UQDe5dIHv1ZqerJG_DGinSm-ezKDw4JiQmFQm_tQ6_yYqmD6M1soaFlSJftQyTE-jkLHOn-hFWnrnMZNsWrBZBrqEAuaPNFgKWvvf06vDuK6ip_fZHwA6YL6O6vnlMDCuvHYpJF_kCxb6aTmqv6hctR0PX07UyhVof84YpO1H8m2ryGmfhX1n-3bubP8j69YBYH6XxpcFKlSjuNa5GJMFimRcXEFAKjuja6KbAWrBDIZYkANY',
-    screenshots: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAHrdZxEAaf9-w-F1eRFsbhouOeE1UQDe5dIHv1ZqerJG_DGinSm-ezKDw4JiQmFQm_tQ6_yYqmD6M1soaFlSJftQyTE-jkLHOn-hFWnrnMZNsWrBZBrqEAuaPNFgKWvvf06vDuK6ip_fZHwA6YL6O6vnlMDCuvHYpJF_kCxb6aTmqv6hctR0PX07UyhVof84YpO1H8m2ryGmfhX1n-3bubP8j69YBYH6XxpcFKlSjuNa5GJMFimRcXEFAKjuja6KbAWrBDIZYkANY',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuByUUYRIfal2WHLQhCyHbsFYc3x7RiOJ3I2KipQLa40bXj_Bfy3IHOUokJfcB8AngXaitrMOok_pTducnApR4ochahSFAuwpKwBvJ_cqN7VGTYv-4RtcX0a7iQ_ds2z2CikOLW040EZGHhzoUbwPb_JDjqYpgetRpTFnXPJSLRSEfSLg3_0xlMp1RhLqEktDwrsh0_3v8a9PIAKjaePmajiZJ3cjv9JOCM00cfcWTkPpymEkJdCfpH0kAYdPaRPwi0KPgyA2mWyAnU',
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDPlHQGNJRgLhJ3EYyMJklDQBKT1rzwy44OYfCv4UBjktrreV1Six6mN9sdRneCMEwDK0DurrD7ptSzj14lW6an5NT2OChKZTMedeDguuHlYxdpYwKpTkvbAWMhPZiLm_fKknETICdZraSHPP_CvJJtWtIV41RutfOqiPJgKxmnxK-DslA2GkbgwweUD_9VYMqwjD58RT_LZbcbUB5SW7FQUERjxE0U-FC1wn-GfiBLulgCCd_g-kty8nZkYmpm_z_CBNEieOJkphw',
-    ],
+    image: null,
+    screenshots: [],
     desc: 'Comprehensive corporate presentation slides and social media templates for business consultants.',
     features: [
       '50+ Slide Templates',
@@ -248,7 +259,7 @@ const products = [
     ],
     whatsIncluded: 'PowerPoint File, Keynote File, Font Files, Icon Pack',
     software: 'Microsoft PowerPoint, Apple Keynote',
-    longDesc: 'A complete corporate branding bundle with 50+ presentation slides and social media templates. Designed for business consultants, agencies, and corporate professionals.',
+    longDesc: 'A complete corporate branding bundle with 50+ presentation slides and social media templates.',
     faq: [
       { q: 'Works with PowerPoint?', a: 'Yes, fully compatible with PowerPoint and Keynote.' },
       { q: 'Can I rebrand it?', a: 'Yes, includes brand guidelines for easy customization.' },
@@ -256,12 +267,18 @@ const products = [
   },
 ]
 
-export const allProducts = products
+export const allProducts = products.map(p => ({
+  ...p,
+  image: p.image || generateProductImage(p.id),
+  screenshots: p.screenshots.length ? p.screenshots : [generateProductImage(p.id + 100), generateProductImage(p.id + 200), generateProductImage(p.id + 300)],
+}))
 
 export const categories = ['All', 'Website UI', 'App UI', 'YouTube Thumbnails', 'Posters', 'Social Media']
 
 export function getProductById(id) {
-  return products.find((p) => p.id === Number(id))
+  const found = products.find((prod) => prod.id === Number(id) || prod.id === id)
+  if (!found) return null
+  return { ...found, image: found.image || generateProductImage(found.id), screenshots: found.screenshots.length ? found.screenshots : [generateProductImage(found.id + 100), generateProductImage(found.id + 200), generateProductImage(found.id + 300)] }
 }
 
 export function getRelatedProducts(product, limit = 4) {
@@ -271,5 +288,24 @@ export function getRelatedProducts(product, limit = 4) {
 }
 
 export function formatPrice(price) {
-  return `$${price}`
+  return `₹${price}`
+}
+
+export function getProductReviewers(productId) {
+  return pickReviewers(productId, 3)
+}
+
+const ratingDistributions = {
+  1: { 5: 72, 4: 18, 3: 7, 2: 2, 1: 1 },
+  2: { 5: 68, 4: 20, 3: 8, 2: 3, 1: 1 },
+  3: { 5: 62, 4: 22, 3: 10, 2: 4, 1: 2 },
+  4: { 5: 75, 4: 16, 3: 6, 2: 2, 1: 1 },
+  5: { 5: 80, 4: 14, 3: 4, 2: 1, 1: 1 },
+  6: { 5: 65, 4: 20, 3: 9, 2: 4, 1: 2 },
+  7: { 5: 72, 4: 18, 3: 7, 2: 2, 1: 1 },
+  8: { 5: 60, 4: 24, 3: 10, 2: 4, 1: 2 },
+}
+
+export function getRatingDistribution(productId) {
+  return ratingDistributions[productId] || ratingDistributions[1]
 }

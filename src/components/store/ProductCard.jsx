@@ -2,13 +2,25 @@ import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { formatPrice } from '../../data/products'
 import { useCart } from '../../context/CartContext'
+import { useWishlist } from '../../context/WishlistContext'
+import ImagePlaceholder from '../common/ImagePlaceholder'
+
+function isTouchDevice() {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0
+}
 
 export default function ProductCard({ product, index, onQuickView }) {
   const { addToCart, cart } = useCart()
+  const { inWishlist, toggleWishlist } = useWishlist()
   const cardRef = useRef(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [selectedColor, setSelectedColor] = useState(null)
   const [added, setAdded] = useState(false)
+  const touch = useRef(false)
+
+  useEffect(() => {
+    touch.current = isTouchDevice()
+  }, [])
 
   const handleMouseMove = (e) => {
     const rect = cardRef.current.getBoundingClientRect()
@@ -28,6 +40,7 @@ export default function ProductCard({ product, index, onQuickView }) {
   }
 
   const inCart = cart.some(p => p.id === product.id)
+  const alwaysShow = touch.current
 
   return (
     <Link
@@ -42,11 +55,18 @@ export default function ProductCard({ product, index, onQuickView }) {
         style={{ transform: `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)` }}
       >
         <div className="relative h-48 overflow-hidden">
-          <img
-            src={product.image}
-            alt={product.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-          />
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.title}
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#f5f5f7] to-[#e8e8ed]">
+              <ImagePlaceholder standalone className="w-12 h-12" />
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
           <div className="absolute top-3 left-3 flex flex-col gap-1.5">
@@ -70,17 +90,27 @@ export default function ProductCard({ product, index, onQuickView }) {
             </div>
           )}
 
-          <div className="absolute top-3 right-3 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+          <div className={`absolute top-3 right-3 flex flex-col gap-1.5 transition-all duration-300 ${
+              alwaysShow ? 'opacity-100 translate-x-0' : 'opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0'
+            }`}>
+            <button
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product) }}
+              className="w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg cursor-pointer"
+              aria-label={inWishlist(product.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+            >
+              <svg aria-hidden="true" className="w-4 h-4" viewBox="0 0 24 24" fill={inWishlist(product.id) ? '#ff3b30' : 'none'} stroke={inWishlist(product.id) ? '#ff3b30' : '#1D1D1F'} strokeWidth="2"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3z" /></svg>
+            </button>
             <button
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product) }}
-              className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg"
+              className="w-11 h-11 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg cursor-pointer"
+              aria-label="Quick view"
             >
-                  <svg className="w-4 h-4 text-[#1D1D1F]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" /></svg>
+              <svg aria-hidden="true" className="w-4 h-4 text-[#1D1D1F]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" /></svg>
             </button>
           </div>
         </div>
 
-        <div className="p-5 bg-white">
+        <div className="p-6 bg-white">
           <div className="flex items-center justify-between mb-2">
             <span className="text-[10px] text-[#0071E3] font-semibold uppercase tracking-wider">{product.category}</span>
             {product.software && (
@@ -88,18 +118,17 @@ export default function ProductCard({ product, index, onQuickView }) {
             )}
           </div>
 
-          <h3 className="font-semibold text-[#1D1D1F] group-hover:text-[#0071E3] transition-colors duration-200">{product.title}</h3>
+          <h3 className="font-semibold text-[#1D1D1F] group-hover:text-[#0071E3] transition-colors transition-apple-fast">{product.title}</h3>
           <p className="text-xs text-[#6E6E73] mt-1 line-clamp-2">{product.desc}</p>
 
           <div className="flex items-center gap-2 mt-3 mb-3">
-            {product.colors?.map((c) => (
+                {product.colors?.map((c) => (
               <button
                 key={c}
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelectedColor(c) }}
-                className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${
-                  selectedColor === c ? 'border-[#1D1D1F] scale-125' : 'border-transparent hover:scale-110'
-                }`}
-                style={{ backgroundColor: c }}
+                className="w-7 h-7 rounded-full border-2 border-transparent hover:border-[#0071E3] transition-colors"
+                style={{background: c}}
+                aria-label={c}
               />
             ))}
           </div>
@@ -113,16 +142,16 @@ export default function ProductCard({ product, index, onQuickView }) {
             </div>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
-                <svg className="w-4 h-4 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                <svg aria-hidden="true" className="w-4 h-4 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                 <span className="text-xs text-[#6E6E73]">{product.rating}</span>
                 <span className="text-[10px] text-[#6E6E73] ml-0.5">({product.reviews})</span>
               </div>
               <button
                 onClick={handleAdd}
-                className={`px-2.5 py-1.5 rounded-full text-[10px] font-medium transition-all ${
+                className={`px-4 py-2.5 rounded-full text-[10px] font-medium transition-all ${
                   added || inCart
                     ? 'bg-green-500 text-white'
-                    : 'bg-[#0071E3] text-white opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0'
+                    : `bg-[#0071E3] text-white ${alwaysShow ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0'}`
                 }`}
               >
                 {added || inCart ? 'Added' : 'Add'}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { formatPrice } from '../../data/products'
 import { useCart } from '../../context/CartContext'
+import ImagePlaceholder from '../common/ImagePlaceholder'
 
 export default function QuickViewModal({ product, onClose }) {
   const { addToCart, cart } = useCart()
@@ -11,9 +12,13 @@ export default function QuickViewModal({ product, onClose }) {
     document.body.style.overflow = 'hidden'
     const handleKey = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', handleKey)
+    const prev = document.activeElement
+    const el = document.querySelector('[data-quickview]')
+    el?.focus()
     return () => {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', handleKey)
+      prev?.focus()
     }
   }, [onClose])
 
@@ -25,7 +30,7 @@ export default function QuickViewModal({ product, onClose }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+        className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4 md:p-8"
       >
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
         <motion.div
@@ -35,13 +40,17 @@ export default function QuickViewModal({ product, onClose }) {
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="relative bg-white rounded-3xl overflow-hidden max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
         >
-          <button onClick={onClose} className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-white transition-all">
-            <svg className="w-5 h-5 text-[#1D1D1F]" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" /></svg>
+          <button onClick={onClose} data-quickview className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-white transition-all">
+            <svg aria-hidden="true" className="w-5 h-5 text-[#1D1D1F]" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" /></svg>
           </button>
 
           <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="h-64 md:h-full bg-[#F5F5F7] flex items-center justify-center p-8">
-              <img src={product.image} alt={product.title} className="w-full h-full object-contain" />
+            <div className="h-48 md:h-full bg-[#F5F5F7] flex items-center justify-center p-8">
+              {product.image ? (
+                <img src={product.image} alt={product.title} loading="lazy" className="w-full h-full object-contain" />
+              ) : (
+                <ImagePlaceholder standalone className="w-20 h-20" />
+              )}
             </div>
             <div className="p-8 flex flex-col justify-between">
               <div>
@@ -57,7 +66,7 @@ export default function QuickViewModal({ product, onClose }) {
                     )}
                   </div>
                   <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+                    <svg aria-hidden="true" className="w-4 h-4 text-orange-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                     <span className="text-sm font-medium text-[#1D1D1F]">{product.rating}</span>
                     <span className="text-xs text-[#6E6E73]">({product.reviews} reviews)</span>
                   </div>
@@ -69,7 +78,7 @@ export default function QuickViewModal({ product, onClose }) {
                     <ul className="space-y-1.5">
                       {product.features.slice(0, 4).map((f) => (
                         <li key={f} className="flex items-center gap-2 text-xs text-[#6E6E73]">
-                          <svg className="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
+                          <svg aria-hidden="true" className="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
                           {f}
                         </li>
                       ))}
@@ -79,7 +88,7 @@ export default function QuickViewModal({ product, onClose }) {
 
                 {product.software && (
                   <div className="flex items-center gap-2 text-xs text-[#6E6E73] mb-6">
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h6v2H8v2h8v-2h-2v-2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12H4V5h16v10z" /></svg>
+                    <svg aria-hidden="true" className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h6v2H8v2h8v-2h-2v-2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12H4V5h16v10z" /></svg>
                     Compatible with: <span className="text-[#1D1D1F] font-medium">{product.software}</span>
                   </div>
                 )}

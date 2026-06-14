@@ -27,15 +27,15 @@ function FeatureCard({ feature, index }) {
     <motion.div
       ref={ref}
       style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0, 1]), y: useTransform(scrollYProgress, [0, 0.5], [40, 0]) }}
-      className="group relative p-8 rounded-2xl bg-white border border-black/[0.04] hover:border-[#0071E3]/20 hover:shadow-lg hover:shadow-[#0071E3]/5 transition-all duration-500"
+      className="store-card"
     >
-      <div className="w-12 h-12 rounded-xl bg-[#0071E3]/10 flex items-center justify-center mb-5 group-hover:bg-[#0071E3] transition-colors duration-500">
-        <svg className="w-6 h-6 text-[#0071E3] group-hover:text-white transition-colors duration-500" viewBox="0 0 24 24" fill="currentColor">
+      <div className="w-10 h-10 rounded-full bg-[#0066cc]/10 flex items-center justify-center mb-4">
+        <svg aria-hidden="true" className="w-5 h-5 text-[#0066cc]" viewBox="0 0 24 24" fill="currentColor">
           <path d={iconPaths[feature.icon]} />
         </svg>
       </div>
-      <h3 className="text-[#1D1D1F] font-semibold text-lg mb-2">{feature.label}</h3>
-      <p className="text-[#6E6E73] text-sm leading-relaxed">{feature.desc}</p>
+      <h3 className="text-[#1d1d1f] text-[17px] font-semibold leading-snug mb-1.5">{feature.label}</h3>
+      <p className="text-[#6e6e73] text-[14px] leading-relaxed">{feature.desc}</p>
     </motion.div>
   )
 }
@@ -45,22 +45,20 @@ export default function FeaturesSection() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['0.3 1', '0.1 0.2'] })
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 bg-white overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-black/[0.06] to-transparent" />
-
-      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+    <section ref={ref} className="bg-[#f5f5f7] py-24 md:py-32 overflow-hidden">
+      <div className="section-container">
         <motion.div
           style={{ opacity: useTransform(scrollYProgress, [0, 0.3], [0, 1]), y: useTransform(scrollYProgress, [0, 0.3], [30, 0]) }}
           className="text-center mb-16 md:mb-20"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#0071E3]/10 rounded-full text-[#0071E3] text-xs font-semibold tracking-wide mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0071E3]" />
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#0066cc]/10 rounded-full text-[#0066cc] text-xs font-semibold tracking-wide mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0066cc]" />
             What We Do
           </span>
-          <h2 className="text-[#1D1D1F] text-4xl md:text-5xl font-bold tracking-tight mt-4">
+          <h2 className="text-[#1d1d1f] text-display-lg font-semibold leading-tight mt-4">
             Everything you need <br className="hidden md:block" />to build a standout brand
           </h2>
-          <p className="text-[#6E6E73] text-lg max-w-xl mx-auto mt-4">
+          <p className="text-[#6e6e73] text-lead max-w-xl mx-auto mt-3">
             From strategy to execution, we deliver design that drives real business impact.
           </p>
         </motion.div>

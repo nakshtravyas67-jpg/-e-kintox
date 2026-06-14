@@ -39,8 +39,9 @@ RULES:
 - NEVER make up information not listed here
 - For specific project inquiries, suggest emailing nakshtr.144@gmail.com`
 
-const openai = process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_openai_api_key_here'
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const GROQ_API_KEY = process.env.GROQ_API_KEY
+const groqClient = GROQ_API_KEY && GROQ_API_KEY !== '' && GROQ_API_KEY !== 'your_groq_api_key_here'
+  ? new OpenAI({ apiKey: GROQ_API_KEY, baseURL: 'https://api.groq.com/openai/v1' })
   : null
 
 const localResponses = [
@@ -75,9 +76,9 @@ router.post('/', chatLimiter, async (req, res) => {
     const local = getLocalResponse(message)
     if (local) return res.json({ reply: local })
 
-    if (openai) {
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
+    if (groqClient) {
+      const completion = await groqClient.chat.completions.create({
+        model: 'llama-3.3-70b-versatile',
         messages: [
           { role: 'system', content: systemPrompt },
           ...(history || []).slice(-10),

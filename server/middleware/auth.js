@@ -1,11 +1,14 @@
 import jwt from 'jsonwebtoken'
 
 export default function auth(req, res, next) {
-  const header = req.headers.authorization
-  if (!header?.startsWith('Bearer ')) return res.status(401).json({ error: 'No token provided' })
+  const token = req.cookies?.kintox_token || (
+    req.headers.authorization?.startsWith('Bearer ')
+      ? req.headers.authorization.split(' ')[1]
+      : null
+  )
+  if (!token) return res.status(401).json({ error: 'Authentication required' })
 
   try {
-    const token = header.split(' ')[1]
     req.user = jwt.verify(token, process.env.JWT_SECRET)
     next()
   } catch {

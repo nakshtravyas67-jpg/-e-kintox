@@ -1,0 +1,17 @@
+{
+  "name": "KINTOX — Premium Design Store & Portfolio",
+  "short_name": "KINTOX",
+  "description": "Premium digital design assets, UI kits, and brand identity solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0066cc",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

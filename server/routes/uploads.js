@@ -4,6 +4,7 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import auth from '../middleware/auth.js'
+import adminAuth from '../middleware/adminAuth.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const UPLOADS_DIR = join(__dirname, '..', 'uploads')
@@ -38,7 +39,7 @@ function saveDesigns(data) {
 
 const router = Router()
 
-router.post('/', auth, upload.single('image'), (req, res) => {
+router.post('/', auth, adminAuth, upload.single('image'), (req, res) => {
   try {
     const { title, description, category, tags } = req.body
     if (!req.file) return res.status(400).json({ error: 'Image required' })
@@ -69,7 +70,7 @@ router.get('/', (_req, res) => {
   res.json({ designs: getDesigns() })
 })
 
-router.delete('/:id', auth, (req, res) => {
+router.delete('/:id', auth, adminAuth, (req, res) => {
   const designs = getDesigns().filter((d) => d.id !== req.params.id)
   saveDesigns(designs)
   res.json({ success: true })

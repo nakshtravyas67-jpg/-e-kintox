@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 const services = [
@@ -17,44 +16,47 @@ const svgPaths = {
 
 export default function ServicesPreview() {
   return (
-    <section className="py-24 md:py-32 bg-white overflow-hidden">
-      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="text-center mb-14">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#0071E3]/10 rounded-full text-[#0071E3] text-xs font-semibold tracking-wide mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0071E3]" />
-            Our Services
-          </span>
-          <h2 className="text-[#1D1D1F] text-3xl md:text-4xl font-bold tracking-tight mt-4">
-            Premium design packages <br className="hidden md:block" />tailored for you
+    <section className="bg-white">
+      <div className="max-w-[980px] mx-auto px-6 py-20">
+        <div className="text-center mb-14">
+          <h2 className="text-[40px] font-[600] leading-[1.1] text-[#1d1d1f] mb-3">
+            Premium design packages tailored for you
           </h2>
-        </motion.div>
+          <p className="text-[17px] font-[400] text-[#7a7a7a]">
+            Expert-crafted creative solutions to elevate your brand
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {services.map((s, i) => (
-            <motion.div
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {services.map((s) => (
+            <div
               key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative bg-[#F5F5F7] rounded-2xl p-6 hover:bg-white hover:shadow-lg hover:shadow-[#0071E3]/5 hover:border-[#0071E3]/20 border border-transparent transition-all duration-500"
+              className="bg-white border border-[#e0e0e0] rounded-[18px] p-6"
             >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center mb-4`}>
-                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor"><path d={svgPaths[s.icon]} /></svg>
-              </div>
-              <span className="text-[10px] font-semibold text-[#0071E3] bg-[#0071E3]/10 px-2 py-0.5 rounded-full">{s.tag}</span>
-              <h3 className="text-[#1D1D1F] font-semibold text-base mt-2 mb-1">{s.title}</h3>
-              <p className="text-[#0071E3] font-bold text-sm">{s.price}</p>
-            </motion.div>
+              <svg aria-hidden="true" className="w-7 h-7 text-[#1d1d1f] mb-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d={svgPaths[s.icon]} />
+              </svg>
+              <span className="text-[11px] font-[600] text-[#0066cc] tracking-wide uppercase">
+                {s.tag}
+              </span>
+              <h3 className="text-[17px] font-[600] text-[#1d1d1f] mt-1 mb-1">
+                {s.title}
+              </h3>
+              <p className="text-[14px] font-[600] text-[#0066cc] mt-3">
+                {s.price}
+              </p>
+            </div>
           ))}
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="text-center mt-10">
-          <Link to="/services" className="inline-flex items-center gap-2 px-8 py-4 bg-[#0071E3] text-white font-semibold text-sm rounded-xl hover:bg-[#0077ED] transition-all active:scale-[0.98]">
-            View All Packages
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        <div className="text-center mt-12">
+          <Link
+            to="/services"
+            className="inline-block border border-[#d2d2d7] rounded-full px-8 py-3 text-[14px] font-[400] text-[#0066cc] hover:bg-[#f5f5f7] transition-colors"
+          >
+            View all services
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

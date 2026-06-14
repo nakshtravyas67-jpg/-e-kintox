@@ -1,11 +1,13 @@
 import { Helmet } from 'react-helmet-async'
 
+const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://kintox.design'
+
 export default function SEO({ title, description, path, image }) {
   const siteName = 'KINTOX — Premium Design Store & Portfolio'
   const fullTitle = title ? `${title} · KINTOX` : siteName
   const desc = description || 'Premium digital design assets, UI kits, and brand identity solutions by KINTOX.'
-  const url = `https://kintox.design${path || '/'}`
-  const img = image || 'https://kintox.design/og.jpg'
+  const url = `${SITE_URL}${path || '/'}`
+  const img = image || `${SITE_URL}/og.jpg`
 
   return (
     <Helmet>

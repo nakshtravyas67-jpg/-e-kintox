@@ -1,42 +1,47 @@
-import { createContext, useContext, useState, useCallback, useMemo } from 'react'
-import { api, setToken, getToken } from '../lib/api'
+import { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react'
+import { api } from '../lib/api'
 
 const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const stored = localStorage.getItem('kintox_user')
-      return stored ? JSON.parse(stored) : null
-    } catch { return null }
-  })
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    api.get('/auth/me')
+      .then((data) => setUser(data.user))
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false))
+  }, [])
 
   const login = useCallback(async (email, password) => {
     const data = await api.post('/auth/login', { email, password })
-    setToken(data.token)
     setUser(data.user)
-    localStorage.setItem('kintox_user', JSON.stringify(data.user))
     return data.user
   }, [])
 
   const signup = useCallback(async (name, email, password) => {
     const data = await api.post('/auth/signup', { name, email, password })
-    setToken(data.token)
     setUser(data.user)
-    localStorage.setItem('kintox_user', JSON.stringify(data.user))
     return data.user
   }, [])
 
-  const logout = useCallback(() => {
+  const socialLogin = useCallback(async (name, email, provider, accessToken) => {
+    const data = await api.post('/auth/social', { name, email, provider, accessToken })
+    setUser(data.user)
+    return data.user
+  }, [])
+
+  const logout = useCallback(async () => {
+    try { await api.post('/auth/logout') } catch {}
     setUser(null)
-    setToken(null)
-    localStorage.removeItem('kintox_user')
   }, [])
 
   const isAuthenticated = useMemo(() => user !== null, [user])
+  const isAdmin = useMemo(() => user?.role === 'admin', [user])
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, login, signup, socialLogin, logout, isAuthenticated, isAdmin, loading }}>
       {children}
     </AuthContext.Provider>
   )

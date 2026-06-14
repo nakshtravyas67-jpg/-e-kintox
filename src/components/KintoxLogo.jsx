@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 export default function KintoxLogo({ dark = false, size = 'default', showTagline = false }) {
-  const textColor = dark ? 'text-white/80' : 'text-[#1D1D1F]'
+  const textColor = dark ? 'text-white' : 'text-[#1D1D1F]'
   const tagColor = dark ? 'text-white/40' : 'text-[#6E6E73]'
   const iconSize = size === 'sm' ? 24 : size === 'lg' ? 36 : 28
   const textSize = size === 'sm' ? 'text-xs' : size === 'lg' ? 'text-lg' : 'text-sm'
@@ -9,11 +9,11 @@ export default function KintoxLogo({ dark = false, size = 'default', showTagline
 
   return (
     <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
-      <svg width={iconSize} height={iconSize} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+      <svg aria-hidden="true" width={iconSize} height={iconSize} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
         <defs>
           <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
-            <stop offset="0%" stopColor="#0071E3" />
-            <stop offset="100%" stopColor="#4A9EFF" />
+            <stop offset="0%" stopColor="#0066cc" />
+            <stop offset="100%" stopColor="#0071E3" />
           </linearGradient>
         </defs>
         <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#logoGrad)" />
