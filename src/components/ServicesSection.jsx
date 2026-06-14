@@ -343,20 +343,18 @@ export default function ServicesSection() {
                 {s.packages ? (
                   <div className="mt-auto space-y-3 border-t border-[#e0e0e0] pt-4">
                     {s.packages.map((pkg) => (
-                      <div key={pkg.tier} className="flex items-center justify-between">
+                      <div
+                        key={pkg.tier}
+                        onClick={(e) => { e.stopPropagation(); if (requireAuth()) { setOrderForm({ service: s, pkg }); setFormStep('form'); setFormData(prev => ({ ...prev, theme: s.title.includes('Thumbnail') ? prev.theme : '' })) } }}
+                        className="flex items-center justify-between cursor-pointer hover:bg-[#f5f5f7] rounded-lg px-2 -mx-2 py-1.5 transition-colors"
+                      >
                         <div>
-                          <span className="text-[14px] font-[400] text-[#7a7a7a]">{pkg.tier}</span>
+                          <span className="text-[14px] font-[400] text-[#1d1d1f]">{pkg.tier}</span>
                           {pkg.popular && <span className="text-[10px] text-[#0066cc] ml-1.5 font-[600]">Popular</span>}
                         </div>
-                        <span className={`text-[17px] font-[600] ${pkg.popular ? 'text-[#0066cc]' : 'text-[#1d1d1f]'}`}>{pkg.price}</span>
+                        <span className={`text-[15px] font-[600] ${pkg.popular ? 'text-[#0066cc]' : 'text-[#1d1d1f]'}`}>{pkg.price}</span>
                       </div>
                     ))}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); if (requireAuth()) { setOrderForm({ service: s, pkg: s.packages[0] }); setFormStep('form'); setFormData(prev => ({ ...prev, theme: s.title.includes('Thumbnail') ? prev.theme : '' })) } }}
-                      className="btn-primary w-full mt-2"
-                    >
-                      Order Now
-                    </button>
                   </div>
                 ) : (
                   <div className="mt-auto border-t border-[#e0e0e0] pt-4">

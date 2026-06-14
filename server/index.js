@@ -29,6 +29,7 @@ app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173', cred
 app.use(cookieParser())
 app.use(express.json({ limit: '10mb' }))
 app.use('/uploads', express.static(join(__dirname, 'uploads')))
+app.use(express.static(join(__dirname, 'dist')))
 app.use('/api', limiter)
 
 app.use('/api/auth', authRoutes)
@@ -39,6 +40,8 @@ app.use('/api/admin', adminRoutes)
 app.use('/api/products', productRoutes)
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }))
+
+app.get('*', (_req, res) => res.sendFile(join(__dirname, 'dist', 'index.html')))
 
 app.use((err, req, res, _next) => {
   console.error(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl} -`, err.message)

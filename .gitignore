@@ -8,10 +8,12 @@ server/uploads/
 server/server.log
 *.log
 cloudflared.exe
-tunnel
+tunnel*
 *.ps1
 *.bat
 *.vbs
+tun.txt
+tun_*
 tunnel-url.txt
 lt-url.log
 lt-u.txt
