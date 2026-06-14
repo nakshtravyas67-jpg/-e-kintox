@@ -362,6 +362,65 @@ router.post('/resend-verification', resendLimiter, async (req, res) => {
   }
 })
 
+router.get('/google', (req, res) => {
+  const redirectTo = req.query.redirect || process.env.FRONTEND_URL || 'http://localhost:5173'
+  const oauth2Client = new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    `${req.protocol}://${req.get('host')}/api/auth/google/callback`
+  )
+  const url = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: ['openid', 'profile', 'email'],
+    state: redirectTo,
+  })
+  res.redirect(url)
+})
+
+router.get('/google/callback', async (req, res) => {
+  const { code, state } = req.query
+  const frontendUrl = state || process.env.FRONTEND_URL || 'http://localhost:5173'
+  if (!code) return res.redirect(`${frontendUrl}/login?error=google_auth_failed`)
+
+  try {
+    const oauth2Client = new OAuth2Client(
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
+      `${req.protocol}://${req.get('host')}/api/auth/google/callback`
+    )
+    const { tokens } = await oauth2Client.getToken(code)
+    const ticket = await oauth2Client.verifyIdToken({
+      idToken: tokens.id_token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
+    const payload = ticket.getPayload()
+    const { email, name } = payload
+
+    let users = getUsers()
+    let user = users.find((u) => u.email === email)
+    if (!user) {
+      user = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + String(Math.random()).slice(2),
+        name: name || 'Google User',
+        email,
+        password: null,
+        role: 'user',
+        verified: true,
+        provider: 'google',
+        createdAt: new Date().toISOString(),
+      }
+      addUser(user)
+    }
+
+    const token = signToken(user)
+    setTokenCookie(res, token)
+    res.redirect(`${frontendUrl}/?google_login=success`)
+  } catch (err) {
+    console.error('Google callback error:', err)
+    res.redirect(`${frontendUrl}/login?error=google_auth_failed`)
+  }
+})
+
 router.post('/logout', (req, res) => {
   clearTokenCookie(res)
   res.json({ message: 'Logged out successfully' })

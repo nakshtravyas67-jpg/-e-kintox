@@ -32,6 +32,13 @@ export default function LoginPage() {
       setVerifiedMsg('Email verified! You can now log in.')
       window.history.replaceState({}, '', '/login')
     }
+    if (location.search.includes('google_auth_failed')) {
+      setErrors({ form: 'Google login failed. Please try again.' })
+      window.history.replaceState({}, '', '/login')
+    }
+    if (location.search.includes('google_login=success')) {
+      window.location.href = '/'
+    }
   }, [location])
 
   const switchMode = (m) => {
@@ -302,24 +309,7 @@ export default function LoginPage() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-3">
-                  <GoogleSignInButton
-                    onSuccess={async (credential) => {
-                      setLoading(true)
-                      try {
-                        if (credential) {
-                          await socialLogin('', '', 'google', credential)
-                        } else {
-                          await socialLogin('Google User', 'google.user@demo.com', 'google')
-                        }
-                        navigate('/', { replace: true })
-                      } catch (err) {
-                        setErrors({ form: err.message })
-                      }
-                      setLoading(false)
-                    }}
-                    onError={(msg) => setErrors({ form: msg })}
-                    disabled={loading}
-                  />
+                  <GoogleSignInButton disabled={loading} />
                   <div className="grid grid-cols-2 gap-3">
                     <AppleSignInButton
                       onSuccess={async () => {
