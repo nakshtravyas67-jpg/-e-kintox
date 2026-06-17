@@ -20,6 +20,15 @@
   --color-hairline: #e0e0e0;
   --color-divider-soft: rgba(0,0,0,0.04);
 
+  /* ── Extended Palette ── */
+  --color-secondary-purple: #5856d6;
+  --color-accent-orange: #ff9500;
+  --color-accent-green: #34c759;
+  --color-accent-red: #ff3b30;
+  --color-accent-yellow: #ffcc00;
+  --color-brand-gradient-start: #0066cc;
+  --color-brand-gradient-end: #5856d6;
+
   /* ── Typography ── */
   --font-display: "SF Pro Display", "Inter", system-ui, -apple-system, sans-serif;
   --font-body: "SF Pro Text", "Inter", system-ui, -apple-system, sans-serif;
@@ -399,6 +408,51 @@ svg.lucide,
 @keyframes bounce-slow {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* ── Touch targets ── */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Swipe indicator ── */
+.swipe-indicator {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 8px 0;
+}
+.swipe-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #d2d2d7;
+  transition: background 0.3s ease;
+}
+.swipe-dot.active {
+  background: #0066cc;
+  width: 20px;
+  border-radius: 9999px;
+}
+
+/* ── Focus ring for keyboard nav ── */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-focus-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .font-headline-md { font-weight: 600; }

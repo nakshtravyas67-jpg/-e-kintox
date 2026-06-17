@@ -92,6 +92,20 @@ export default function HeroSection() {
       className="min-h-[90vh] md:min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden px-4"
       style={{ background: '#272729' }}
     >
+      {/* Gradient mesh overlay */}
+      <div className="absolute inset-0 opacity-30" style={{
+        backgroundImage: `
+          radial-gradient(ellipse at 20% 50%, rgba(0,102,204,0.15) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 20%, rgba(88,86,214,0.12) 0%, transparent 50%),
+          radial-gradient(ellipse at 40% 80%, rgba(52,199,89,0.08) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 80%, rgba(255,149,0,0.08) 0%, transparent 50%)
+        `
+      }} />
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+        backgroundSize: '60px 60px'
+      }} />
+
       <SEO title="Premium Graphic Design Agency" description="KINTOX — professional graphic design agency for brand identity, web design, and high-conversion visuals." path="/" />
 
       <MouseContext.Provider value={{ x: mouseX, y: mouseY }}>
@@ -101,8 +115,8 @@ export default function HeroSection() {
           ))}
         </div>
         <div className="absolute inset-0 block md:hidden" style={{ perspective: '1000px' }}>
-          {floatingShapes.slice(0, 2).map((s, i) => (
-            <FloatingShape key={i} index={i} {...s} offsetX={s.x / 2} offsetY={s.y / 2} />
+          {floatingShapes.slice(0, 1).map((s, i) => (
+            <FloatingShape key={i} index={i} {...s} offsetX={s.x / 3} offsetY={s.y / 3} />
           ))}
         </div>
 
@@ -162,18 +176,20 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        className="relative z-10 mt-8 md:mt-12 flex flex-wrap items-center justify-center gap-2 md:gap-4 px-4"
+        className="relative z-10 mt-8 md:mt-12 w-full"
       >
-        {['Web Design', 'Brand Identity', 'App UI', 'Social Media'].map((label, i) => (
-          <motion.div
-            key={label}
-            animate={{ y: [0, -4 - i * 2, 0] }}
-            transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.15 }}
-            className="backdrop-blur-xl bg-white/10 rounded-[14px] px-3 md:px-5 py-2 md:py-3 border border-white/15"
-          >
-            <p className="text-white text-[11px] md:text-[13px] font-[500]">{label}</p>
-          </motion.div>
-        ))}
+        <div className="flex md:flex-wrap items-center gap-2 md:gap-4 overflow-x-auto px-4 pb-2 hide-scrollbar md:justify-center snap-x snap-mandatory">
+          {['Web Design', 'Brand Identity', 'App UI', 'Social Media'].map((label, i) => (
+            <motion.div
+              key={label}
+              animate={{ y: [0, -4 - i * 2, 0] }}
+              transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.15 }}
+              className="shrink-0 snap-center backdrop-blur-xl bg-white/10 rounded-[14px] px-3 md:px-5 py-2 md:py-3 border border-white/15"
+            >
+              <p className="text-white text-[11px] md:text-[13px] font-[500] whitespace-nowrap">{label}</p>
+            </motion.div>
+          ))}
+        </div>
       </motion.div>
 
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#272729] pointer-events-none z-10" />

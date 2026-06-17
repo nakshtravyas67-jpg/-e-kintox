@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const footerLinks = {
@@ -23,6 +24,18 @@ const footerLinks = {
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    if (email) {
+      setSubscribed(true)
+      setEmail('')
+      setTimeout(() => setSubscribed(false), 3000)
+    }
+  }
+
   return (
     <footer className="w-full bg-[#f5f5f7] border-t border-[#e0e0e0]">
       <div className="max-w-[980px] mx-auto px-5 py-12">
@@ -46,7 +59,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 mt-6">
               {[{ href: 'https://instagram.com/nakshtr53', label: 'Instagram' }, { href: 'https://linkedin.com/in/nakshtra-vyas', label: 'LinkedIn' }, { href: 'https://twitter.com', label: 'Twitter' }].map(({ href, label }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="w-11 h-11 rounded-full bg-[#e8e8e8] flex items-center justify-center hover:bg-[#d2d2d7] transition-colors">
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-[#e8e8e8] flex items-center justify-center hover:bg-[#d2d2d7] transition-colors">
                   <svg aria-hidden="true" className="w-4 h-4 text-[#7a7a7a]" viewBox="0 0 24 24" fill="currentColor">
                     {label === 'Instagram' && <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zm0 1.8c-3.16 0-3.54.01-4.8.07-2.43.11-3.62 1.21-3.73 3.73-.06 1.26-.07 1.64-.07 4.8s.01 3.54.07 4.8c.11 2.52 1.3 3.62 3.73 3.73 1.26.06 1.64.07 4.8.07s3.54-.01 4.8-.07c2.43-.11 3.62-1.21 3.73-3.73.06-1.26.07-1.64.07-4.8s-.01-3.54-.07-4.8c-.11-2.52-1.3-3.62-3.73-3.73-1.26-.06-1.64-.07-4.8-.07zm0 3.06a4.98 4.98 0 100 9.96 4.98 4.98 0 000-9.96zm0 8.16a3.18 3.18 0 110-6.36 3.18 3.18 0 010 6.36zm5.17-8.5a1.16 1.16 0 100 2.32 1.16 1.16 0 000-2.32z" />}
                     {label === 'LinkedIn' && <path d="M20.45 20.45H16.9v-5.32c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.81v5.41H9.55V9h3.4v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.1 20.45H3.58V9h3.52v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z" />}
@@ -72,7 +85,31 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 mt-8 border-t border-[#e0e0e0] gap-4">
+        <div className="mt-10 py-8 border-t border-b border-[#e0e0e0]">
+          <div className="max-w-md mx-auto text-center">
+            <h4 className="text-[14px] font-[600] text-[#1d1d1f] mb-1">Stay in the loop</h4>
+            <p className="text-[12px] text-[#7a7a7a] mb-4">Get design tips, early access to new products, and exclusive offers.</p>
+            <form onSubmit={handleSubscribe} className="flex items-center gap-2">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                className="flex-1 min-h-[44px] px-4 py-3 bg-white border border-[#e0e0e0] rounded-[11px] text-[14px] text-[#1d1d1f] outline-none placeholder:text-[#7a7a7a] focus:border-[#0066cc] transition-colors"
+              />
+              <button
+                type="submit"
+                className="min-h-[44px] px-5 py-3 bg-[#0066cc] text-white text-[14px] font-[500] rounded-[11px] hover:opacity-90 transition-opacity cursor-pointer whitespace-nowrap"
+              >
+                {subscribed ? 'Subscribed!' : 'Subscribe'}
+              </button>
+            </form>
+            {subscribed && <p className="text-[12px] text-[#34c759] mt-2">Thanks for subscribing!</p>}
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 gap-4">
           <p className="text-[12px] text-[#7a7a7a]">&copy; {year} KINTOX. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-[12px] text-[#7a7a7a]">

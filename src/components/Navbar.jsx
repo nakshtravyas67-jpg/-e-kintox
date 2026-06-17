@@ -166,19 +166,31 @@ export default function Navbar() {
 
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            id="mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/80"
-            style={{ paddingTop: 'calc(44px + env(safe-area-inset-top, 0px))' }}
-          >
-            <div className="bg-white h-full overflow-y-auto">
-              <div className="flex flex-col px-5 py-6">
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-0 z-40 bg-black/60"
+            />
+            <motion.div
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigation menu"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed bottom-0 left-0 right-0 z-50 max-h-[85vh] bg-white rounded-t-[24px] overflow-y-auto"
+              style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+            >
+              <div className="flex justify-center pt-3 pb-1">
+                <div className="w-8 h-1 rounded-full bg-[#d2d2d7]" />
+              </div>
+              <div className="flex flex-col px-6 pb-6">
                 {links.map((link) => {
                   const isActive = location.pathname === link.path
                   return (
@@ -193,18 +205,20 @@ export default function Navbar() {
                     </Link>
                   )
                 })}
-                {isAuthenticated ? (
-                  <>
-                    <Link to="/my-designs" onClick={() => setMobileOpen(false)} className="py-4 text-[17px] text-[#7a7a7a] border-b border-[#f0f0f0]">My Designs</Link>
-
-                    <button onClick={() => { setMobileOpen(false); logout() }} className="py-4 text-[17px] text-red-500 text-left cursor-pointer">Sign Out</button>
-                  </>
-                ) : (
-                  <button onClick={() => { setMobileOpen(false); window.location.href = '/login' }} className="py-4 text-[17px] text-[#7a7a7a] text-left cursor-pointer">Sign In</button>
-                )}
+                <div className="mt-4 space-y-2">
+                  {isAuthenticated ? (
+                    <>
+                      <Link to="/my-designs" onClick={() => setMobileOpen(false)} className="block w-full py-3.5 text-center text-[17px] font-[400] bg-[#f5f5f7] rounded-full text-[#1d1d1f]">My Designs</Link>
+                      <Link to="/my-orders" onClick={() => setMobileOpen(false)} className="block w-full py-3.5 text-center text-[17px] font-[400] bg-[#f5f5f7] rounded-full text-[#1d1d1f]">My Orders</Link>
+                      <button onClick={() => { setMobileOpen(false); logout() }} className="w-full py-3.5 text-center text-[17px] font-[400] rounded-full text-red-500 border border-red-200 cursor-pointer">Sign Out</button>
+                    </>
+                  ) : (
+                    <button onClick={() => { setMobileOpen(false); window.location.href = '/login' }} className="w-full py-3.5 text-center text-[17px] font-[400] bg-[#0066cc] text-white rounded-full cursor-pointer">Sign In</button>
+                  )}
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
