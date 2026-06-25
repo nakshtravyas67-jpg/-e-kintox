@@ -29,7 +29,7 @@ export default function TrendingCarousel({ products }) {
             <div className="bg-[#F5F5F7] rounded-2xl overflow-hidden h-full">
               <div className="h-44 overflow-hidden relative">
                 {p.image ? (
-                  <img src={p.image} alt={p.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src={p.image} alt={p.title} width="300" height="170" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 ) : (
                   <ImagePlaceholder containerClassName="w-full h-full" className="w-10 h-10" />
                 )}

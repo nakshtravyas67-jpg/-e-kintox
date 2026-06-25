@@ -209,7 +209,7 @@ export default function CheckoutPage() {
                     <div key={item.id} className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-[11px] bg-white overflow-hidden shrink-0 flex items-center justify-center">
                         {item.image ? (
-                          <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                          <img src={item.image} alt={item.title} width="80" height="80" className="w-full h-full object-cover" />
                         ) : (
                           <ImagePlaceholder className="w-5 h-5" />
                         )}

@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import SEO from './SEO'
+import { api } from '../lib/api'
+import { useToast } from '../context/ToastContext'
 
 export default function ContactSection({ standalone }) {
+  const { toast } = useToast()
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [sent, setSent] = useState(false)
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const contactInfo = [
     { label: 'Email', value: 'nakshtr.144@gmail.com', href: 'mailto:nakshtr.144@gmail.com', d: 'M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z' },
@@ -27,9 +29,10 @@ export default function ContactSection({ standalone }) {
     try {
       await api.post('/contact', form)
       setSent(true)
+      toast.success('Message sent successfully!')
       setTimeout(() => { setSent(false); setForm({ name: '', email: '', subject: '', message: '' }) }, 3000)
     } catch {
-      setError('Failed to send. Please email us directly at nakshtr.144@gmail.com')
+      toast.error('Failed to send. Please email nakshtr.144@gmail.com')
     }
     setLoading(false)
   }
@@ -141,7 +144,6 @@ export default function ContactSection({ standalone }) {
                   className="w-full px-4 py-3 bg-white border border-[#e0e0e0] rounded-[11px] text-[17px] text-[#1d1d1f] outline-none focus:border-[#0066cc] transition-colors placeholder:text-[#7a7a7a] resize-none min-h-[120px]"
                 />
               </div>
-              {error && <p className="text-[14px] text-red-500 text-center">{error}</p>}
               <button
                 type="submit"
                 disabled={sent || loading}

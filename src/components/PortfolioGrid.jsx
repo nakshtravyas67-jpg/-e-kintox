@@ -41,7 +41,7 @@ function PortfolioModal({ project, onClose }) {
       >
         <div className="relative h-48 md:h-80 overflow-hidden">
           {project.image ? (
-            <img src={project.image} alt={project.title} loading="lazy" className="w-full h-full object-cover" />
+            <img src={project.image} alt={project.title} width="600" height="400" loading="lazy" className="w-full h-full object-cover" />
           ) : (
             <ImagePlaceholder containerClassName="w-full h-full" className="w-16 h-16" />
           )}

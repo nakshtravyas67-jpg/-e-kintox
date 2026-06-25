@@ -46,7 +46,7 @@ export default function CartPage() {
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                   <div className="w-14 sm:w-20 h-14 sm:h-20 rounded-[11px] bg-[#f5f5f7] overflow-hidden shrink-0 flex items-center justify-center">
                     {item.image ? (
-                      <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover" />
+                      <img src={item.image} alt={item.title} width="120" height="120" loading="lazy" className="w-full h-full object-cover" />
                     ) : (
                       <ImagePlaceholder className="w-6 sm:w-8 h-6 sm:h-8" />
                     )}

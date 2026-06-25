@@ -16,9 +16,6 @@ function getMessages() {
 
 const router = Router()
 
-router.use(auth)
-router.use(adminAuth)
-
 router.get('/users', (_req, res) => {
   const users = getUsers().map(({ password, ...u }) => u)
   res.json({ users, total: users.length })
@@ -29,7 +26,7 @@ router.get('/orders', (_req, res) => {
   res.json({ orders, total: orders.length })
 })
 
-router.patch('/orders/:id/status', (req, res) => {
+router.patch('/orders/:id/status', auth, adminAuth, (req, res) => {
   const { id } = req.params
   const { status } = req.body
   const valid = ['pending', 'in_progress', 'completed', 'cancelled']

@@ -3,8 +3,8 @@ import { useRef, useEffect, useState } from 'react'
 const stats = [
   { value: 250, suffix: '+', label: 'Projects Delivered' },
   { value: 98, suffix: '%', label: 'Client Satisfaction' },
-  { value: 12, suffix: '+', label: 'Industry Awards' },
-  { value: 8, suffix: '+', label: 'Years Experience' },
+  { value: 0, suffix: '', label: 'Industry Awards' },
+  { value: 2, suffix: '+', label: 'Years Experience' },
 ]
 
 function CountUp({ end, suffix }) {

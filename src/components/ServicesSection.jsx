@@ -431,7 +431,7 @@ export default function ServicesSection() {
               className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-white rounded-[18px]"
             >
               <div className="h-40 md:h-72 overflow-hidden relative">
-                <img src={selectedService.image} alt={selectedService.title} loading="lazy" className="w-full h-full object-cover" />
+                <img src={selectedService.image} alt={selectedService.title} width="600" height="400" loading="lazy" className="w-full h-full object-cover" />
                 <button
                   onClick={() => setSelectedService(null)}
                   className="absolute top-4 right-4 z-10 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center cursor-pointer"

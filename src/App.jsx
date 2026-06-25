@@ -2,6 +2,8 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { HelmetProvider } from 'react-helmet-async'
+import { ToastProvider } from './context/ToastContext'
+import ToastContainer from './components/common/ToastContainer'
 import Navbar from './components/Navbar'
 import PageTransition from './components/PageTransition'
 import WhatsAppButton from './components/WhatsAppButton'
@@ -151,6 +153,7 @@ export default function App() {
   const location = useLocation()
   return (
     <HelmetProvider>
+      <ToastProvider>
       <WishlistProvider>
       <div className="bg-background text-on-background antialiased min-h-screen flex flex-col">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-white focus:text-[#1d1d1f] focus:rounded-[11px] focus:shadow-lg focus:text-[14px] focus:font-[500]">
@@ -196,6 +199,8 @@ export default function App() {
         <ChatBot />
       </div>
       </WishlistProvider>
+      <ToastContainer />
+      </ToastProvider>
     </HelmetProvider>
   )
 }

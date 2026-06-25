@@ -135,6 +135,8 @@ export default function ProductDetailPage() {
                   <img
                     src={product.image}
                     alt={product.title}
+                    width="800"
+                    height="450"
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />
@@ -152,7 +154,7 @@ export default function ProductDetailPage() {
                           selectedImage === i ? 'border-[#0066cc]' : 'border-[#e0e0e0]'
                         }`}
                       >
-                        <img src={img} alt="" loading="lazy" className="w-full h-full object-cover" />
+                        <img src={img} alt="" width="64" height="64" loading="lazy" className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>
@@ -336,7 +338,7 @@ export default function ProductDetailPage() {
                   <Link key={p.id} to={`/product/${p.id}`} className="block bg-white border border-[#e0e0e0] rounded-[18px] overflow-hidden hover:border-[#0066cc] transition-colors">
                     <div className="bg-[#f5f5f7] aspect-video">
                       {p.image ? (
-                        <img src={p.image} alt={p.title} loading="lazy" className="w-full h-full object-cover" />
+                        <img src={p.image} alt={p.title} width="800" height="450" loading="lazy" className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#f5f5f7] to-[#e8e8ed]">
                           <ImagePlaceholder standalone className="w-8 h-8" />
@@ -347,7 +349,7 @@ export default function ProductDetailPage() {
                       <p className="text-[12px] font-[400] text-[#7a7a7a] uppercase tracking-wider">{p.category}</p>
                       <h3 className="text-[17px] font-[600] text-[#1d1d1f] mt-1">{p.title}</h3>
                       <div className="flex items-center justify-between mt-2">
-                        <span className="text-[17px] font-[400] text-[#1d1d1f]">{formatPrice(p.price)}</span>
+                        <span className="text-[17px] font-[400] text-[#1d1d1f]">{p.packages?.[0] ? formatPrice(p.packages[0].price) : ''}</span>
                         <div className="flex items-center gap-1">
                           <svg aria-hidden="true" className="w-[14px] h-[14px] text-[#ff9f0a]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                           <span className="text-[12px] text-[#7a7a7a]">{p.rating}</span>

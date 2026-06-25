@@ -3,6 +3,7 @@ node_modules
 .vite
 *.local
 .env
+.env.*
 server/data/
 server/uploads/
 server/server.log

@@ -47,7 +47,7 @@ export default function QuickViewModal({ product, onClose }) {
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="h-48 md:h-full bg-[#F5F5F7] flex items-center justify-center p-8">
               {product.image ? (
-                <img src={product.image} alt={product.title} loading="lazy" className="w-full h-full object-contain" />
+                <img src={product.image} alt={product.title} width="400" height="300" loading="lazy" className="w-full h-full object-contain" />
               ) : (
                 <ImagePlaceholder standalone className="w-20 h-20" />
               )}

@@ -31,7 +31,7 @@ export default function TeamSection() {
         {/* ── Hero Banner ── */}
         <div className="product-tile-dark relative overflow-hidden">
           <div className="absolute inset-0 opacity-15">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80" alt="" className="w-full h-full object-cover" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80" alt="" width="1400" height="800" className="w-full h-full object-cover" loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#272729] via-transparent to-[#272729]" />
           </div>
           <div className="section-container text-center relative z-10">
