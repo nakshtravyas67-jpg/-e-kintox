@@ -36,6 +36,7 @@ const WishlistPage = lazy(() => import('./components/WishlistPage'))
 const MyOrders = lazy(() => import('./components/MyOrders'))
 const ResetPasswordPage = lazy(() => import('./components/ResetPasswordPage'))
 const StaticPage = lazy(() => import('./components/StaticPage'))
+const ComingSoon = lazy(() => import('./components/ComingSoon'))
 import Footer from './components/Footer'
 
 function HomePage() {
@@ -196,6 +197,7 @@ export default function App() {
               <Route path="/terms" element={<StaticRoute pageKey="terms" />} />
               <Route path="/faq" element={<StaticRoute pageKey="faq" />} />
               <Route path="/refund" element={<StaticRoute pageKey="refund" />} />
+              <Route path="/coming-soon" element={<PageTransition><ComingSoon /></PageTransition>} />
               <Route path="*" element={<NotFoundRoute />} />
               </Routes>
             </Suspense>
