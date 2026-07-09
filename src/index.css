@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+html { touch-action: manipulation; }
+
 @theme {
   /* ── Apple Colors ── */
   --color-action-blue: #0066cc;
@@ -104,7 +106,7 @@
   --spacing-section--lg: 120px;
 
   --spacing-px: 1px;
-  --spacing-0\.5: 2px;
+  --spacing-05: 2px;
   --spacing-1: 4px;
   --spacing-2: 8px;
   --spacing-3: 12px;

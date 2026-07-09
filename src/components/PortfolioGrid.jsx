@@ -37,6 +37,7 @@ function PortfolioModal({ project, onClose }) {
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative h-48 md:h-80 overflow-hidden">
@@ -88,7 +89,7 @@ export default function PortfolioGrid({ filter, onFilterChange, visible, onLoadM
             <button
               key={cat}
               onClick={() => onFilterChange(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`px-4 py-2.5 rounded-full text-xs font-medium transition-all ${
                 filter === cat
                   ? 'bg-[#1D1D1F] text-white'
                   : 'bg-[#F5F5F7] text-[#6E6E73] hover:bg-[#E8E8ED]'

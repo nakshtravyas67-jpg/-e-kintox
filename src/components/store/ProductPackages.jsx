@@ -14,6 +14,7 @@ const categoryColors = {
 }
 
 export default function ProductPackages({ product, index = 0 }) {
+  const [selectedImg, setSelectedImg] = useState(product.image || product.screenshots?.[0])
   const { addToCart } = useCart()
   const { isAuthenticated } = useAuth()
   const { toast } = useToast()
@@ -49,6 +50,23 @@ export default function ProductPackages({ product, index = 0 }) {
       </div>
       <p className="text-[14px] text-[#7a7a7a] ml-4 mb-2 max-w-xl">{product.desc}</p>
       <p className="text-[12px] text-[#7a7a7a] ml-4 mb-6">{product.software}</p>
+
+      {product.image && (
+        <div className="ml-4 mb-8">
+          <div className="relative rounded-[18px] overflow-hidden bg-[#f5f5f7] mb-3 max-w-[600px]">
+            <img src={selectedImg} alt={product.title} width="600" height="400" loading="lazy" className="w-full h-auto object-cover" />
+          </div>
+          {product.screenshots?.length > 1 && (
+            <div className="flex gap-2 overflow-x-auto hide-scrollbar">
+              {product.screenshots.map((img, i) => (
+                <button key={i} onClick={() => setSelectedImg(img)} className={`shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-colors cursor-pointer ${selectedImg === img ? 'border-[#0066cc]' : 'border-transparent hover:border-[#0066cc]/40'}`}>
+                  <img src={img} alt="" width="64" height="48" loading="lazy" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {product.packages?.map((pkg) => (

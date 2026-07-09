@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import { HelmetProvider } from 'react-helmet-async'
 import { ToastProvider } from './context/ToastContext'
 import ToastContainer from './components/common/ToastContainer'
+import { Skeleton } from './components/common/Skeleton'
 import Navbar from './components/Navbar'
 import PageTransition from './components/PageTransition'
 import WhatsAppButton from './components/WhatsAppButton'
@@ -163,10 +164,15 @@ export default function App() {
         <main id="main-content" className="flex-1 pb-14 md:pb-16 pt-11 md:pt-[44px]">
           <AnimatePresence mode="wait">
             <Suspense fallback={
-              <div className="min-h-[80vh] bg-white flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-10 h-10 border-2 border-[#0066cc] border-t-transparent rounded-full animate-spin mx-auto" role="status" aria-label="Loading" />
-                  <p className="text-[#7a7a7a] text-[14px] mt-4">Loading KINTOX…</p>
+              <div className="min-h-[80vh] bg-white p-6 max-w-[980px] mx-auto">
+                <div className="space-y-6">
+                  <Skeleton className="h-10 w-48 mx-auto !rounded-[8px]" />
+                  <Skeleton className="h-5 w-72 mx-auto !rounded-[8px]" />
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
+                    <div className="bg-[#F5F5F7] rounded-2xl overflow-hidden"><Skeleton className="h-48 w-full !rounded-none" /><div className="p-6 bg-white space-y-3"><Skeleton className="h-3 w-20" /><Skeleton className="h-4 w-3/4" /><Skeleton className="h-3 w-full" /></div></div>
+                    <div className="bg-[#F5F5F7] rounded-2xl overflow-hidden"><Skeleton className="h-48 w-full !rounded-none" /><div className="p-6 bg-white space-y-3"><Skeleton className="h-3 w-20" /><Skeleton className="h-4 w-3/4" /><Skeleton className="h-3 w-full" /></div></div>
+                    <div className="bg-[#F5F5F7] rounded-2xl overflow-hidden"><Skeleton className="h-48 w-full !rounded-none" /><div className="p-6 bg-white space-y-3"><Skeleton className="h-3 w-20" /><Skeleton className="h-4 w-3/4" /><Skeleton className="h-3 w-full" /></div></div>
+                  </div>
                 </div>
               </div>
             }>

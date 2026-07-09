@@ -75,7 +75,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link to={link.path} className="text-[12px] text-[#7a7a7a] hover:text-[#1d1d1f] transition-colors leading-[2.41]">
+                    <Link to={link.path} className="text-[12px] text-[#7a7a7a] hover:text-[#1d1d1f] transition-colors inline-block py-1">
                       {link.label}
                     </Link>
                   </li>

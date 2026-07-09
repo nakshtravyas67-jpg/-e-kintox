@@ -173,7 +173,7 @@ export default function LoginPage() {
                     <button
                       key={key}
                       onClick={() => switchMode(key)}
-                      className={`flex-1 py-2.5 text-sm font-medium rounded-[18px] transition-colors cursor-pointer ${
+                      className={`flex-1 py-3 text-sm font-medium rounded-[18px] transition-colors cursor-pointer ${
                         mode === key ? 'bg-[#0066cc] text-white' : 'text-[#7a7a7a] hover:text-[#1d1d1f]'
                       }`}
                     >

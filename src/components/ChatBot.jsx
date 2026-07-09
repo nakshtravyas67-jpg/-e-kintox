@@ -72,7 +72,7 @@ export default function ChatBot() {
   return (
     <>
       {open && (
-        <div role="dialog" aria-modal="true" aria-label="KINTOX AI Chat" className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-32px)] md:w-[380px] h-[520px] bg-white rounded-[18px] border border-[#e0e0e0] flex flex-col overflow-hidden">
+        <div role="dialog" aria-modal="true" aria-label="KINTOX AI Chat" className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-32px)] md:w-[380px] h-[520px] bg-white rounded-[18px] border border-[#e0e0e0] flex flex-col overflow-hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
           <div className="flex items-center justify-between px-5 py-4 border-b border-[#f0f0f0] shrink-0">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-[#f5f5f7] flex items-center justify-center">

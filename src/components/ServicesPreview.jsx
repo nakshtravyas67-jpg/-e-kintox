@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const services = [
   { icon: 'smart_display', title: 'YouTube Thumbnails', price: 'From ₹499', tag: 'Best Seller', color: 'from-purple-500/20 to-pink-600/20' },
-  { icon: 'code', title: 'Website Development', price: 'From ₹2,999', tag: 'Popular', color: 'from-blue-500/20 to-indigo-600/20' },
+  { icon: 'code', title: 'Website Development', price: 'From ₹4,999', tag: 'Popular', color: 'from-blue-500/20 to-indigo-600/20' },
   { icon: 'brush', title: 'Branding & Logo', price: 'From ₹4,999', tag: 'Premium', color: 'from-emerald-500/20 to-teal-600/20' },
   { icon: 'share', title: 'Social Media Design', price: 'From ₹1,499', tag: 'Trending', color: 'from-cyan-500/20 to-blue-600/20' },
 ]

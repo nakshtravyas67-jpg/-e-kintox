@@ -109,7 +109,7 @@ export default function CheckoutPage() {
           <p className="text-[17px] text-[#7a7a7a] mb-2">We'll reach out to you at {form.email} within 24 hours.</p>
           {paymentMethod === 'razorpay' && <p className="text-[14px] text-green-600 mb-8">Payment received successfully ✓</p>}
           {paymentMethod === 'upi' && <p className="text-[14px] text-green-600 mb-8">UPI payment verified — Thank you! ✓</p>}
-          {paymentMethod === 'cod' && <p className="text-[14px] text-[#7a7a7a] mb-8">Pay on delivery — Cash / UPI accepted.</p>}
+
           <Link to="/portfolio" className="inline-block bg-[#0066cc] text-white px-8 py-3 rounded-full text-[14px] font-[500]">Continue Shopping</Link>
         </div>
       </>
@@ -151,17 +151,6 @@ export default function CheckoutPage() {
                     <span className="text-[11px] text-green-600 bg-green-50 px-2 py-0.5 rounded-full font-medium">Fast & Secure</span>
                   </label>
 
-                  <label className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${paymentMethod === 'cod' ? 'border-[#0066cc] bg-[#0066cc]/5' : 'border-[#e0e0e0] bg-white hover:border-[#0066cc]/30'}`}>
-                    <input type="radio" name="payment" value="cod" checked={paymentMethod === 'cod'} onChange={() => { setPaymentMethod('cod'); setUpiTid('') }} className="accent-[#0066cc]" />
-                    <div className="flex items-center gap-2 flex-1">
-                      <svg className="w-6 h-6 text-[#7a7a7a]" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                      <div>
-                        <span className="text-[15px] font-medium text-[#1d1d1f]">Cash on Delivery</span>
-                        <p className="text-[12px] text-[#7a7a7a]">Pay when you receive</p>
-                      </div>
-                    </div>
-                  </label>
-
                   <label className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${paymentMethod === 'upi' ? 'border-[#0066cc] bg-[#0066cc]/5' : 'border-[#e0e0e0] bg-white hover:border-[#0066cc]/30'}`}>
                     <input type="radio" name="payment" value="upi" checked={paymentMethod === 'upi'} onChange={() => { setPaymentMethod('upi'); setUpiTid('') }} className="accent-[#0066cc]" />
                     <div className="flex items-center gap-2 flex-1">
@@ -190,7 +179,7 @@ export default function CheckoutPage() {
               </div>
 
               <button type="submit" disabled={submitting || (paymentMethod === 'upi' && !upiTid.trim())} className="w-full bg-[#0066cc] text-white px-8 py-4 rounded-full text-[17px] font-[500] hover:bg-[#0055aa] transition-colors disabled:opacity-60 cursor-pointer">
-                {submitting ? 'Processing...' : paymentMethod === 'razorpay' ? `Pay ${formatPrice(cartTotal)}` : paymentMethod === 'upi' ? 'Confirm Payment & Place Order' : `Place Order — ${formatPrice(cartTotal)}`}
+                {submitting ? 'Processing...' : paymentMethod === 'razorpay' ? `Pay ${formatPrice(cartTotal)}` : 'Confirm Payment & Place Order'}
               </button>
 
               {paymentMethod === 'razorpay' && (
