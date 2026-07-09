@@ -198,7 +198,7 @@ export default function ProductDetailPage() {
                 </div>
                 <div className="flex items-center gap-2 text-[14px] text-[#7a7a7a]">
                   <svg aria-hidden="true" className="w-[18px] h-[18px] text-green-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
-                  {product.stock}
+                  {product.stock || 'In Stock'}
                 </div>
               </div>
 
@@ -218,11 +218,11 @@ export default function ProductDetailPage() {
                 {added || cart.some(p => p.id === product.id) ? '✓ Added to Cart' : 'Add to Cart — ' + formatPrice(product.price * quantity)}
               </button>
 
-              {product.features && (
+              {product.packages?.[0]?.features && (
                 <div className="mt-8 pt-6 border-t border-[#e0e0e0]">
                   <h3 className="text-[14px] font-[600] text-[#1d1d1f] uppercase tracking-wider mb-3">What's Included</h3>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {product.features.map((f) => (
+                    {product.packages[0].features.map((f) => (
                       <li key={f} className="flex items-center gap-2 text-[14px] text-[#7a7a7a]">
                         <svg aria-hidden="true" className="w-[16px] h-[16px] shrink-0 text-green-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
                         {f}
@@ -313,7 +313,7 @@ export default function ProductDetailPage() {
           <section className="mt-20 mb-20">
             <h2 className="text-[24px] font-[600] text-[#1d1d1f] mb-6">FAQ</h2>
             <div className="space-y-3 max-w-[700px]">
-              {product.faq.map((item, i) => (
+              {(product.faq || []).map((item, i) => (
                 <details key={i} className="group bg-[#f5f5f7] rounded-[11px] overflow-hidden">
                   <summary className="flex items-center justify-between p-5 cursor-pointer text-[#1d1d1f] text-[17px] list-none">
                     {item.q}
@@ -389,7 +389,7 @@ export default function ProductDetailPage() {
                       <h3 className="text-[17px] font-[600] text-[#1d1d1f] mt-1">{p.title}</h3>
                       <p className="text-[12px] text-[#7a7a7a] mt-1 line-clamp-2">{p.desc}</p>
                       <div className="flex items-center justify-between mt-3">
-                        <span className="text-[17px] font-[400] text-[#1d1d1f]">{formatPrice(p.price)}</span>
+                        <span className="text-[17px] font-[400] text-[#1d1d1f]">{formatPrice(p.packages?.[0]?.price || 0)}</span>
                         <div className="flex items-center gap-1">
                           <svg aria-hidden="true" className="w-[14px] h-[14px] text-[#ff9f0a]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                           <span className="text-[12px] text-[#7a7a7a]">{p.rating}</span>
